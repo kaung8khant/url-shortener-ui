@@ -22,3 +22,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Api url:
 ### `http://localhost:8000/api`
+
+## Admin Dashboard
+
+You can go to admin dashboard using this url (assuming you are running on localhost:3000):
+
+### `http://localhost:3000/admin`
