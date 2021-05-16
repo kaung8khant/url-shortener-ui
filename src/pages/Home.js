@@ -6,12 +6,14 @@ import { shortenUrl } from "../api/url";
 
 const Home = () => {
   const [url, setUrl] = useState("");
+  const [date, setDate] = useState(null);
   const [error, setError] = useState(null);
   const [shorten, setShorten] = useState(null);
   const submitUrl = () => {
-    shortenUrl(url)
+    shortenUrl(url, date)
       .then((response) => {
         setShorten(response.data);
+        setError(null);
       })
       .catch((e) => {
         setError(e.response.data.message);
@@ -26,38 +28,53 @@ const Home = () => {
         </div>
         {shorten && (
           <div className="home__url">
-            <span className="home__url-item">
+            <a
+              href={window.location.href + shorten.code}
+              className="home__url-item"
+            >
               {window.location.href + shorten.code}
-            </span>
+            </a>
           </div>
         )}
         {!shorten && (
-          <div className="home__search-box">
-            <input
-              type="text"
-              placeholder="Input your url..."
-              className="home__search-box-input"
-              onChange={(e) => {
-                setUrl(e.target.value);
-              }}
-            />
-            <div
-              className="home__search-box-button"
-              onClick={() => {
-                if (url !== "") {
-                  submitUrl();
-                } else {
-                  setError("Please enter url");
-                }
-              }}
-            >
-              <img
-                src={Arrow}
-                alt="arrow"
-                className="home__search-box-button-icon"
+          <>
+            <div className="home__input-box">
+              <input
+                type="text"
+                placeholder="Input your url..."
+                className="home__input-box-input"
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                }}
               />
+              <div
+                className="home__input-box-button"
+                onClick={() => {
+                  if (url !== "") {
+                    submitUrl();
+                  } else {
+                    setError("Please enter url");
+                  }
+                }}
+              >
+                <img
+                  src={Arrow}
+                  alt="arrow"
+                  className="home__input-box-button-icon"
+                />
+              </div>
             </div>
-          </div>
+            <div className="home__input-box">
+              <span className="home__input-box-label">Expire At : </span>
+              <input
+                type="date"
+                id="birthday"
+                name="birthday"
+                className="home__input-box-date"
+                onChange={(e) => setDate(e.target.value)}
+              ></input>
+            </div>
+          </>
         )}
 
         {error && (

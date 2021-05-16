@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const shortenUrl = async (url) => {
+const shortenUrl = async (url, date) => {
   let response = await axios.post(`shorten`, {
     link: url,
+    expired_at: date,
   });
   return response.data;
 };

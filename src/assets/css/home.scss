@@ -7,7 +7,7 @@
       display: flex;
       justify-content: center;
       &-text {
-        color: #43438e;
+        color: $primaryColor;
         font-size: 40px;
         font-weight: bold;
       }
@@ -20,11 +20,40 @@
         color: red;
       }
     }
-    &__search-box {
+    &__url {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      &-item {
+        font-size: 20px;
+        font-weight: bold;
+        color: $primaryColor;
+      }
+    }
+    &__input-box {
+      margin-top: 10px;
       display: flex;
       justify-content: center;
       &-input {
         width: 400px;
+        height: 40px;
+        border-radius: 30px;
+        border: none;
+        background-color: #7979c7;
+        padding: 0px 20px 0 20px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      &-label {
+        width: 120px;
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: $primaryColor;
+      }
+      &-date {
+        width: 200px;
         height: 40px;
         border-radius: 30px;
         border: none;
