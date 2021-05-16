@@ -28,3 +28,9 @@ Api url:
 You can go to admin dashboard using this url (assuming you are running on localhost:3000):
 
 ### `http://localhost:3000/admin`
+
+For login use account below:
+
+#### `username: admin`
+#### `password: password`
+
