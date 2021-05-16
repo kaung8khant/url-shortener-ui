@@ -1,0 +1,25 @@
+@import "../../global.scss";
+
+.login {
+  margin-top: 5%;
+  @include desktop-up {
+    &__form {
+      &-input {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        &-item {
+          width: 300px;
+        }
+      }
+    }
+    &__error {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      &-text {
+        color: red;
+      }
+    }
+  }
+}
