@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import "../../assets/css/login.scss";
 import { login } from "../../api/auth";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -62,6 +62,17 @@ const Login = () => {
             onClick={handleFormSubmit}
           >
             Login
+          </Button>
+        </div>
+        <div className="login__form-input">
+          <Button
+            component={Link}
+            to="/"
+            variant="contained"
+            color="secondary"
+            className="login__form-input-item"
+          >
+            Back To Home
           </Button>
         </div>
       </form>

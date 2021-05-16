@@ -8,10 +8,12 @@ import {
   Toolbar,
   AppBar,
 } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const columns = [
     { field: "id", headerName: "No", width: 70 },
@@ -60,7 +62,7 @@ const Dashboard = () => {
         console.log(e);
         if (e && e.response.status === 401) {
           localStorage.removeItem("access_token");
-          setData([]);
+          setRedirect(true);
         }
       });
   }, [filter]);
@@ -71,6 +73,10 @@ const Dashboard = () => {
     }
   }, [data, getData]);
 
+  if (redirect) {
+    return <Redirect to="/admin/login" />;
+  }
+
   return (
     <div style={{ width: "100%" }}>
       <AppBar position="static">
@@ -78,7 +84,15 @@ const Dashboard = () => {
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             Url Shortener Dashboard
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button
+            color="inherit"
+            onClick={() => {
+              localStorage.removeItem("access_token");
+              setRedirect(true);
+            }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <TextField
