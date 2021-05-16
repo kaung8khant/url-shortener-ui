@@ -13,12 +13,15 @@ const getUrl = async (code) => {
   return response.data;
 };
 
-const getAllUrl = async (filter) => {
-  let response = await axios.get(`admin/url?filter=${filter}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
-  });
+const getAllUrl = async (page = 1, pagesize = 15, filter) => {
+  let response = await axios.get(
+    `admin/url?page=${page}&filter=${filter}&size=${pagesize}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }
+  );
   return response.data;
 };
 const deleteUrl = async (id) => {

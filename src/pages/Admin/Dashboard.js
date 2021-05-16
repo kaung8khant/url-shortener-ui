@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const columns = [
     { field: "id", headerName: "No", width: 70 },
@@ -22,14 +23,14 @@ const Dashboard = () => {
       field: "hit",
       headerName: "Number of Hit",
       description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 150,
+      type: "number",
+      width: 170,
     },
     { field: "link", headerName: "Full Url", width: 200 },
     {
       field: "expired_at",
       headerName: "Expiry",
-      type: "number",
+      type: "date",
       width: 150,
     },
     {
@@ -53,22 +54,27 @@ const Dashboard = () => {
     },
   ];
 
-  const getData = useCallback(() => {
-    getAllUrl(filter)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-        if (e && e.response.status === 401) {
-          localStorage.removeItem("access_token");
-          setRedirect(true);
-        }
-      });
-  }, [filter]);
+  const getData = useCallback(
+    (page = 1, pagesize = 15) => {
+      getAllUrl(page, pagesize, filter)
+        .then((response) => {
+          setData(response.data);
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.log(e);
+          if (e && e.response.status === 401) {
+            localStorage.removeItem("access_token");
+            setRedirect(true);
+          }
+        });
+    },
+    [filter]
+  );
 
   useEffect(() => {
     if (!data) {
+      setLoading(true);
       getData();
     }
   }, [data, getData]);
@@ -105,7 +111,10 @@ const Dashboard = () => {
       />
       <Button
         color="primary"
-        onClick={() => getData()}
+        onClick={() => {
+          getData();
+          setLoading(true);
+        }}
         style={{ marginTop: "20px" }}
       >
         Filter
@@ -113,12 +122,25 @@ const Dashboard = () => {
 
       <div style={{ height: "400px", marginTop: "40px" }}>
         <DataGrid
-          rows={data ? data : []}
+          rows={data ? data.data : []}
           columns={columns}
-          pageSize={data ? (data.length > 10 ? 10 : data.length) : 0}
-          onPageChange={(page) => {
-            console.log(page);
+          pagination
+          pageSize={5}
+          rowCount={data ? data.total : 0}
+          paginationMode="server"
+          onPageChange={(param) => {
+            setLoading(true);
+            console.log(param);
+            getData(param.page + 1, param.pageSize);
           }}
+          rowsPerPageOptions={[5, 10, 20]}
+          sortModel={[
+            {
+              field: "id",
+              sort: "asc",
+            },
+          ]}
+          loading={loading}
           checkboxSelection={false}
         />
       </div>
