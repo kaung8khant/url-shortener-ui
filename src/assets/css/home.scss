@@ -1,0 +1,68 @@
+@import "../../global.scss";
+
+.home {
+  margin-top: 5%;
+  @include desktop-up {
+    &__title-box {
+      display: flex;
+      justify-content: center;
+      &-text {
+        color: #43438e;
+        font-size: 40px;
+        font-weight: bold;
+      }
+    }
+    &__error {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      &-text {
+        color: red;
+      }
+    }
+    &__search-box {
+      display: flex;
+      justify-content: center;
+      &-input {
+        width: 400px;
+        height: 40px;
+        border-radius: 30px;
+        border: none;
+        background-color: #7979c7;
+        padding: 0px 20px 0 20px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      &-input::placeholder {
+        color: white;
+      }
+      &-input:focus {
+        outline: none;
+      }
+      &-button {
+        width: 50px;
+        height: 40px;
+        background: #9d9dec;
+        border-radius: 10px;
+        margin-left: 10px;
+        &-icon {
+          height: 20px;
+          margin-top: 10px;
+          margin-left: 15px;
+        }
+      }
+      &-button:hover {
+        cursor: pointer;
+      }
+    }
+    &__img-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+    &__primary-img {
+      width: 530px;
+      height: 300px;
+    }
+  }
+}
